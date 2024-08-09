@@ -1,13 +1,14 @@
 import reflex as rx
 from movie_streaming_site.components.moviecard import movie_card
 from movie_streaming_site.state import State
+from movie_streaming_site.components.search import search
+from movie_streaming_site.components.footer import footer
 
 
-
-
-
+@rx.page(on_load=State.on_load)
 def index():
     return rx.box(
+        
         rx.box(
             rx.image(src="https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/8torndado.jpg", width="100vw", height="108vh"),
             
@@ -52,99 +53,23 @@ def index():
             height="111vh",
             position="relative",
         ),
-        rx.hstack(
-            rx.icon(tag="search", color="white", size=30),
-            rx.input(
-                placeholder="Search",
-                color="white",
-                font_size="3.5vh",
-                width="100%",
-                background_color="rgba(255, 255, 255, 0)",
-                border="none",
-                border_width="0px",
-                height="30"
-            ),
-            bg="rgba(0, 0, 0, 0.29)",
-            border_radius="1087vh",
-            padding="0.5vh",
-            width="48vw",
-            position="absolute",
-            left="28vw",
-            top="2vh",
-        ),
+        search(),
         rx.center(
             rx.grid(
-                movie_card("Borderlands", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/7borders.jpg"),
-                movie_card("Dealpool & Wolverine", "2024", "1 hr 21 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/3dead_and_wolv.jpg"),
-                movie_card("Despicable Me 4", "2024", "1 hr 35 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/4minions_wer_despicible.jpg"),
-                movie_card("Joe Rogan", "2024", "1 hr 23 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/6joe.jpg"),
-                movie_card("Trap", "2024", "2 hr 41 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/5trap.jpg"),
-                movie_card("The Garfield Move", "2024", "101 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/2garlf.jpg"),
-                movie_card("Inside Out 2", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/1inside_out_2.jpg"),
-                movie_card("The Super Mario Bros Movie", "2023", "93 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/0maro.jpg"),
-                rx.hstack(
-                    rx.vstack(
-                        rx.text(
-                            "API attribution:",
-                            font_size= "4vh",
-                            font_weight="900",
-                        ),
-                        rx.link(
-                            rx.image(
-                            "https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_2-9665a76b1ae401a510ec1e0ca40ddcb3b0cfe45f1d51b77a308fea0845885648.svg",
-                            height="4vh",
-
-                            ),
-                            href="https://www.themoviedb.org",
-                            
-                        ),
-                        rx.link(
-                            rx.image(
-                                "https://moviesapi.club/assets/images/logo.png",
-                                height="6vh",
-
-                            ),   
-                            href="https://moviesapi.club",
-                            
-                        ),
-                    ),
-                    rx.center(
-                        rx.text(
-                            "Movie Streaming Site",
-                            font_size= "9vh",
-                            font_weight="900",
-                        ),
-                        height="100%",
-                        width="100%"
-                    ),
+                rx.foreach(
+                    State.now_playing,
+                    lambda info, index: movie_card(info["title"], info["year"], f"{info["runtime"]} mins", info["poster"], description=info["description"])
                     
-                    rx.center(
-                        rx.vstack(
-                            rx.text(
-                                "Made with: ",
-                                font_size= "4vh",
-                                font_weight="900",
-                            ),
-                            rx.link(
-                                rx.image(
-                                    "https://reflex.dev/logos/dark/reflex.svg",
-                                    height="4vh",
-                                ),
-                                href="https://reflex.dev",
-                                
-                            ),
-                        ),
-                        pading_right="5vw",
-                        height="100%",
-                        width="15vw"
-                    ),
-                    
-                    background_color="rgba(255,255,255,0.02)",
-                    left="-1.5vw",
-                    position="relative",
-                    width="100vw",
-                    height="20vh"
                 ),
+                # movie_card("Borderlands", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/7borders.jpg"),
+                # movie_card("Dealpool & Wolverine", "2024", "1 hr 21 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/3dead_and_wolv.jpg"),
+                # movie_card("Despicable Me 4", "2024", "1 hr 35 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/4minions_wer_despicible.jpg"),
+                # movie_card("Joe Rogan", "2024", "1 hr 23 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/6joe.jpg"),
+                # movie_card("Trap", "2024", "2 hr 41 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/5trap.jpg"),
+                # movie_card("The Garfield Move", "2024", "101 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/2garlf.jpg"),
+                # movie_card("Inside Out 2", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/1inside_out_2.jpg"),
+                # movie_card("The Super Mario Bros Movie", "2023", "93 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/0maro.jpg"),
+                footer(),
                 spacing="1.5vh",
                 columns="4",
                 position="absolute",
