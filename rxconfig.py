@@ -1,5 +1,5 @@
 import reflex as rx
 
 config = rx.Config(
-    app_name="movie-streaming-site",
+    app_name="movie_streaming_site",
 )
