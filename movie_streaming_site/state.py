@@ -10,27 +10,86 @@ class State(rx.State):
     movie_iframe:str
     current_movie:dict[str, str]
     loading:bool = True
+    search_results:list[dict[str, str]]
+    
+    search_value:str
+    def change_search_value(self, new):
+        self.search_value = new
+        
+    @rx.var
+    def search_url(self) -> str:
+        return f"/search/{self.search_value}/"
+    
+    
     
     
     @rx.var
+    def search_query(self) -> str:
+        
+        return self.router.page.params.get("query", "")
+    @rx.var
     def movie_id(self) -> str:
         
-        return self.router.page.params.get("movieid", "519182")
+        return self.router.page.params.get("movieid", "")
+    
+    def search(self, query):
+        url = f"https://api.themoviedb.org/3/search/movie?query={query}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {os.environ.get("auth")}"
+        }
+
+        response = requests.get(url, headers=headers)
+        data = json.loads(response.text)
+        print(data)
+        results = data["results"]
+        for result in results:
+            result.pop("adult")
+            result.pop("genre_ids")
+            result["id"] = str(result["id"])
+            result.pop("original_language")
+            result.pop("original_title")
+            result.pop("popularity")
+            result["year"] = result["release_date"][:4]
+            result.pop("release_date")
+            result.pop("video")
+            result.pop("vote_average")
+            result.pop("vote_count")
+            result["link"] = f"/movieplayer/{result["id"]}"
+            result["description"] = result["overview"]
+            result["poster"] = f"https://image.tmdb.org/t/p/w300_and_h450_bestv2/{result['poster_path']}"
+        print(results)
+        return results
+    
+    
+    def search_on_load(self):
+        print(f"Searched for {self.search_query}")
+        self.search_results = self.search(self.search_query)
+    
     
     
     def get_current_movie(self):
         movie_id = self.movie_id
         data = self.get_movie_data(movie_id)
-        result = {
-            "site":data["homepage"],
-            "imdb_link":f"https://www.imdb.com/title/{data["imdb_id"]}/",
-            "tmdb_link":f"https://www.themoviedb.org/movie/{data["id"]}",
-            "description":data["overview"],
-            "runtime":f"{data['runtime']} min",
-            "revenue":f"${data['revenue']}",
-            "title":data["title"],
-            "date":data["release_date"]
-        }
+        print(data)
+        try:
+            result = {
+                
+                
+                "imdb_link":f"https://www.imdb.com/title/{data["imdb_id"]}/",
+                "tmdb_link":f"https://www.themoviedb.org/movie/{data["id"]}",
+                "description":data["overview"],
+                "runtime":f"{data['runtime']} min",
+                "revenue":f"${data['revenue']}",
+                "title":data["title"],
+                "date":data["release_date"]
+            }
+        except:
+            return
+        try:
+            result["site"]= data["homepage"]
+        except:
+            pass
         return result
         
     

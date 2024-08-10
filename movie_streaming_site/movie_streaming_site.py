@@ -4,6 +4,21 @@ from movie_streaming_site.state import State
 from movie_streaming_site.components.search import search
 from movie_streaming_site.components.footer import footer
 from reflex_lottiefiles import LottieFiles
+from movie_streaming_site.components.loading import loading
+from movie_streaming_site.pages.player import movieplayer
+from movie_streaming_site.pages.search import search_page
+from reflex_motion import motion
+
+class slider(rx.Component):
+    library = "nuka-carousel"
+    tag = "Carousel"
+    autoplay:rx.Var[bool]
+    showDots:rx.Var[bool]
+    autoplayInterval:rx.Var[int]
+
+
+Slider = slider.create
+
 
 @rx.page(on_load=State.on_load)
 def index():
@@ -20,23 +35,31 @@ def index():
                 top="0",
                 bg="linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, rgba(18, 18, 18, 0.25) 37%, rgba(18, 18, 18, 0.77) 67%, rgba(18, 18, 18, 0.90) 77%, #121212 93%)",
             ),
-           
-            rx.button(
-                "Watch Now",
-                rx.icon(tag="circle_play", size=70),
-                bg="#FFE066",
-                color="black",
-                font_size="5vh",
-                font_weight="800",
-                border_radius="9999px",
-                border="0.7vh solid #2C2C2C",
-                padding="1.5vh",
+            motion(
+                
+                rx.button(
+                    "Watch Now",
+                    rx.icon(tag="circle_play", size=70),
+                    bg="#FFE066",
+                    color="black",
+                    font_size="5vh",
+                    font_weight="800",
+                    border_radius="9999px",
+                    border="0.7vh solid #2C2C2C",
+                    padding="1.5vh",
+                    width="24vw",
+                    height="16vh"
+                ),
                 position="absolute",
                 left="7vw",
                 top="70vh",
                 width="24vw",
-                height="16vh"
+                height="16vh",
+                while_hover={"scale": 1.2},
+                while_tap={"scale": 0.9},
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
             ),
+            
             rx.heading(
                 "TORNADO MOVIE OR SOMETHING",
                 font_size="14vh",
@@ -55,7 +78,28 @@ def index():
         ),
         search(),
         rx.center(
+            rx.cond(
+                State.loading,
+                rx.center(
+                    rx.vstack(
+                        rx.heading("Loading, please wait"),
+                        LottieFiles(
+                            src="https://lottie.host/5ff06a80-3f45-4dd3-8737-f4cf62ba3d48/X5hdVEjbNK.lottie",
+                            autoplay=True,
+                            loop=True,
+                            width="20vw",
+                            height="20vw",
+                        )
+                    ),
+                    
+                    width="100%",
+                    height="90vh",
+                    margin_bottom="20vh"
+                ),
+
+            ),
             rx.grid(
+                
                 rx.foreach(
                     State.now_playing,
                     lambda info, index: movie_card(info["title"], info["year"], f"{info['runtime']} mins", info["link"], info["poster"], description=info["description"])
@@ -79,116 +123,16 @@ def index():
 
 
 
-@rx.page(route="/movieplayer/[movieid]", on_load=State.on_load)
-def movieplayer():
+def testpage():
     return rx.box(
-        search(),
-        
-        
-        rx.cond(
-            State.loading,
-            rx.center(
-                rx.vstack(
-                    rx.heading("Loading, please wait"),
-                    LottieFiles(
-                        src="https://lottie.host/5ff06a80-3f45-4dd3-8737-f4cf62ba3d48/X5hdVEjbNK.lottie",
-                        autoplay=True,
-                        loop=True,
-                        width="20vw",
-                        height="20vw",
-                    )
-                ),
-                
-                width="100%",
-                height="90vh"
-            ),
-            
-            rx.box(
-                rx.text(State.current_movie["title"], font_size="10.5vh", font_weight="800"),
-                rx.hstack(
-                    rx.html(
-                        State.movie_iframe,
-                        width="50vw",
-                        height="60vw"
-                    ),
-                    #rx.box(width="960px", height="540px", bg="#D9D9D9"),
-                    rx.vstack(
-                        rx.text(
-                            "Description",
-                            color="white",
-                            font_size="4vh",
-                            font_weight="800"
-                        ),
-                        rx.text(
-                            State.current_movie["description"],
-                            color="white",
-                            font_size="3vh",
-                            max_width="28vw"
-                        ),
-                        align_items="flex-start",
-                    ),
-                    rx.desktop_only(
-                        rx.vstack(
-                            movie_info_item(State.current_movie["date"], "calendar"),
-                            movie_info_item(State.current_movie["revenue"], "dollar-sign"),
-                            movie_info_item(State.current_movie["runtime"], "clock"),
-                            
-                            rx.cond(
-                                State.current_movie["site"],
-                                rx.link(
-                                    movie_info_item("Site", "globe"),
-                                    href=State.current_movie["site"],
-                                    is_external=True
-                                ),
-                            ),
-                            rx.cond(
-                                State.current_movie["tmdb_link"],
-                                rx.link(
-                                    movie_info_item("TMDB", "clock"),
-                                    href=State.current_movie["tmdb_link"],
-                                    is_external=True
-                                ),
-                            ),
-                            rx.cond(
-                                State.current_movie["imdb_link"],
-                                rx.link(
-                                    movie_info_item("IMDB", "clock"),
-                                    href=State.current_movie["imdb_link"],
-                                    is_external=True
-                                )
-                            )
-                            
-                            
-                            
-                        ),
-                    ),
-                    
-                    spacing="2vw",
-                ),
-            )
-        ),
-        
-       
-       
-        width = "100%",
-        padding="5.5vh",
+        Slider(
+            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-01.jpg"),
+            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-01.jpg"),
+            autoplay=True,
+            showDots=True,
+            autoplayInterval=3000
+        )
     )
-
-def movie_info_item(text, icon):
-    return rx.hstack(
-        rx.center(
-            rx.icon(
-                icon,
-            ),
-           
-        ),
-        rx.center(
-            rx.text(text, color="white", font_size="2.5vh"),
-        ),
-       
-        spacing="1vw",
-    )
-
 
 
 
@@ -200,4 +144,7 @@ style = {
 }
 
 app = rx.App(style = style)
+app.add_page(search_page)
+app.add_page(movieplayer)
 app.add_page(index)
+app.add_page(testpage)

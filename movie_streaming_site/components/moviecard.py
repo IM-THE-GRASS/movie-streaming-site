@@ -1,11 +1,23 @@
 import reflex as rx
+from reflex_motion import motion
+
+
 def movie_card(title: str, year: str, duration: str, link:str, img:str = "https://via.placeholder.com/316x421", description:str = ""):
     return rx.hover_card.root(
         rx.hover_card.trigger(
             rx.link(
                 
-                rx.box(
-                    rx.image(src=img, width="17vw", height="47vh"),
+                motion(
+                    motion(
+                        rx.image(
+                            src=img,
+                            width="17vw",
+                            height="47vh"
+                        ),
+                        while_hover={"scale": 1.05},
+                        while_tap={"scale": 0.95},
+                        transition={"type": "spring", "stiffness": 400, "damping": 17},
+                    ),
                     rx.vstack(
                         rx.hstack(
                             rx.text(year, color="#C0C0C0", font_size="2vh", font_style="italic"),
@@ -23,7 +35,13 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
                     bg="#1A1A1A",
                     border_radius="1vh",
                     #border="0.1vh solid #D9D9D9",
+                    while_hover={"scale": 1.05},
+                    while_tap={"scale": 0.95},
+                    transition={"type": "spring", "stiffness": 400, "damping": 17},
                 ),
+                padding="1vw",
+                width="19vw",
+                border_radius="1vh",
                 href=link,
                 is_external=True
             )
@@ -48,6 +66,7 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
             ),
             side="right"
         ),
+        open_delay=900
         
     )
 
