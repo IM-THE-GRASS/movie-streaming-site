@@ -87,14 +87,16 @@ def index():
 
 
 
-@rx.page(route="/movieplayer/[movieid]", on_load=State.on_load)
+@rx.page(route="/movieplayer/[movieid]")
 def movieplayer():
     return rx.box(
         search(),
-        rx.text("Despicable Me 4", font_size="10.5vh", font_weight="800"),
+        rx.text(State.current_movie["title"], font_size="10.5vh", font_weight="800"),
         rx.hstack(
             rx.html(
-                State.movie_iframe
+                State.movie_iframe,
+                width="50vw",
+                height="60vw"
             ),
             #rx.box(width="960px", height="540px", bg="#D9D9D9"),
             rx.vstack(
@@ -105,10 +107,7 @@ def movieplayer():
                     font_weight="800"
                 ),
                 rx.text(
-                    "Gru and Lucy and their girls---Margo, Edith and Agnes---welcome a new "
-                    "member to the Gru family, Gru Jr., who is intent on tormenting his dad. "
-                    "Gru also faces a new nemesis in Maxime Le Mal and his femme fatale "
-                    "girlfriend Valentina, forcing the family to go on the run.",
+                    State.current_movie["description"],
                     color="white",
                     font_size="3vh",
                     max_width="28vw"
@@ -117,20 +116,47 @@ def movieplayer():
             ),
             rx.desktop_only(
                 rx.vstack(
-                    movie_info_item("2024-06-20", "calendar"),
-                    movie_info_item("$100,000,000", "dollar-sign"),
-                    movie_info_item("94min", "clock"),
-                    movie_info_item("Site", "globe"),
-                    movie_info_item("IMDB", "clock"),
-                    movie_info_item(State.movie_id, "clock"),
+                    movie_info_item(State.current_movie["date"], "calendar"),
+                    movie_info_item(State.current_movie["revenue"], "dollar-sign"),
+                    movie_info_item(State.current_movie["runtime"], "clock"),
+                    
+                    rx.cond(
+                        State.current_movie["site"],
+                        rx.link(
+                            movie_info_item("Site", "globe"),
+                            href=State.current_movie["site"],
+                            is_external=True
+                        ),
+                    ),
+                    rx.cond(
+                        State.current_movie["tmdb_link"],
+                        rx.link(
+                            movie_info_item("TMDB", "clock"),
+                            href=State.current_movie["tmdb_link"],
+                            is_external=True
+                        ),
+                    ),
+                    rx.cond(
+                        State.current_movie["imdb_link"],
+                        rx.link(
+                            movie_info_item("IMDB", "clock"),
+                            href=State.current_movie["imdb_link"],
+                            is_external=True
+                        )
+                    )
+                    
+                    
+                    
                 ),
             ),
             
             spacing="2vw",
         ),
        
-        width="100%",
+       
+        width = "100%",
         padding="5.5vh",
+        on_mount=State.on_load    
     )
 
 def movie_info_item(text, icon):

@@ -8,11 +8,31 @@ auth = os.environ.get("auth")
 class State(rx.State):
     now_playing:list[dict[str, str]]
     movie_iframe:str
+    current_movie:dict[str, str]
     
     @rx.var
     def movie_id(self) -> str:
         
         return self.router.page.params.get("movieid", "519182")
+    
+    
+    def get_current_movie(self):
+        movie_id = self.movie_id
+        data = self.get_movie_data(movie_id)
+        result = {
+            "site":data["homepage"],
+            "imdb_link":f"https://www.imdb.com/title/{data["imdb_id"]}/",
+            "tmdb_link":f"https://www.themoviedb.org/movie/{data["id"]}",
+            "description":data["overview"],
+            "runtime":f"{data['runtime']} min",
+            "revenue":f"${data['revenue']}",
+            "title":data["title"],
+            "date":data["release_date"]
+        }
+        print(result)
+        return result
+        
+    
     
     
     def get_movie_data(self, id):
@@ -36,6 +56,7 @@ class State(rx.State):
                 "Authorization": f"Bearer {auth}"
             }
         )
+        
         data = json.loads(response.text)
         results = data["results"]
         
@@ -53,7 +74,8 @@ class State(rx.State):
             )
         return result_list
     def on_load(self):
-        self.movie_iframe = f""" <iframe src="https://moviesapi.club/movie/""" + self.router.page.params.get("movieid", "519182") + """"></iframe> """ #style="height:60vh; width:50vw"
+        self.movie_iframe = f" <iframe src=\"https://moviesapi.club/movie/" + self.router.page.params.get("movieid", "519182") + "\" style=\"width:50vw;height:60vh;\"></iframe> " #style="height:60vh; width:50vw"
         self.now_playing = self.get_now_playing_movies()
+        self.current_movie = self.get_current_movie()
     
     
