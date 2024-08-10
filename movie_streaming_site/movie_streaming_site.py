@@ -87,18 +87,21 @@ def index():
 
 
 
-
+@rx.page(route="/movieplayer/[movieid]", on_load=State.on_load)
 def movieplayer():
     return rx.box(
         search(),
-        rx.text("Despicable Me 4", font_size="96px", font_weight="800"),
+        rx.text("Despicable Me 4", font_size="10.5vh", font_weight="800"),
         rx.hstack(
-            rx.box(width="960px", height="540px", bg="#D9D9D9"),
+            rx.html(
+                State.movie_iframe
+            ),
+            #rx.box(width="960px", height="540px", bg="#D9D9D9"),
             rx.vstack(
                 rx.text(
                     "Description",
                     color="white",
-                    font_size="40px",
+                    font_size="4vh",
                     font_weight="800"
                 ),
                 rx.text(
@@ -107,37 +110,42 @@ def movieplayer():
                     "Gru also faces a new nemesis in Maxime Le Mal and his femme fatale "
                     "girlfriend Valentina, forcing the family to go on the run.",
                     color="white",
-                    font_size="24px",
-                    max_width="536px"
+                    font_size="3vh",
+                    max_width="28vw"
                 ),
                 align_items="flex-start",
             ),
-            rx.vstack(
-                movie_info_item("2024-06-20", "calendar"),
-                movie_info_item("$100,000,000", "calendar"),
-                movie_info_item("94min", "clock"),
-                movie_info_item("Site", "globe"),
-                movie_info_item("IMDB", "clock"),
-                movie_info_item("TMDB", "clock"),
+            rx.desktop_only(
+                rx.vstack(
+                    movie_info_item("2024-06-20", "calendar"),
+                    movie_info_item("$100,000,000", "dollar-sign"),
+                    movie_info_item("94min", "clock"),
+                    movie_info_item("Site", "globe"),
+                    movie_info_item("IMDB", "clock"),
+                    movie_info_item(State.movie_id, "clock"),
+                ),
             ),
-            spacing="40px",
+            
+            spacing="2vw",
         ),
-        
+       
         width="100%",
-        padding="50px",
+        padding="5.5vh",
     )
 
 def movie_info_item(text, icon):
     return rx.hstack(
-        rx.icon(
-            icon,
-            color="#F5F5F5",
-            bg="#2C2C2C",
-            padding="12px",
-            border_radius="32px",
+        rx.center(
+            rx.icon(
+                icon,
+            ),
+           
         ),
-        rx.text(text, color="white", font_size="24px"),
-        spacing="12px",
+        rx.center(
+            rx.text(text, color="white", font_size="2.5vh"),
+        ),
+       
+        spacing="1vw",
     )
 
 
@@ -152,4 +160,3 @@ style = {
 
 app = rx.App(style = style)
 app.add_page(index)
-app.add_page(movieplayer)

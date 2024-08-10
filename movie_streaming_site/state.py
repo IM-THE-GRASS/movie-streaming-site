@@ -7,6 +7,13 @@ dotenv.load_dotenv()
 auth = os.environ.get("auth")
 class State(rx.State):
     now_playing:list[dict[str, str]]
+    movie_iframe:str
+    
+    @rx.var
+    def movie_id(self) -> str:
+        
+        return self.router.page.params.get("movieid", "519182")
+    
     
     def get_movie_data(self, id):
         url = f"https://api.themoviedb.org/3/movie/{id}?language=en-US"
@@ -46,6 +53,7 @@ class State(rx.State):
             )
         return result_list
     def on_load(self):
+        self.movie_iframe = f""" <iframe src="https://moviesapi.club/movie/""" + self.router.page.params.get("movieid", "519182") + """"></iframe> """ #style="height:60vh; width:50vw"
         self.now_playing = self.get_now_playing_movies()
     
     
