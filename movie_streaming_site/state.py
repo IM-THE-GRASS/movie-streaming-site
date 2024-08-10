@@ -37,7 +37,7 @@ class State(rx.State):
         for result in results:
             result_list.append(
                 {
-                    "poster":f"https://image.tmdb.org/t/p/w300_and_h450_bestv2/{result["poster_path"]}",
+                    "poster":f"https://image.tmdb.org/t/p/w300_and_h450_bestv2/{result['poster_path']}",
                     "title": result["title"],
                     "year":result["release_date"][:4],
                     "description":result["overview"],

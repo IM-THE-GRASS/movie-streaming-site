@@ -58,7 +58,7 @@ def index():
             rx.grid(
                 rx.foreach(
                     State.now_playing,
-                    lambda info, index: movie_card(info["title"], info["year"], f"{info["runtime"]} mins", info["poster"], description=info["description"])
+                    lambda info, index: movie_card(info["title"], info["year"], f"{info['runtime']} mins", info["poster"], description=info["description"])
                     
                 ),
                 # movie_card("Borderlands", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/7borders.jpg"),
@@ -85,6 +85,65 @@ def index():
         overflow_x="hidden"
     )
 
+
+
+
+def movieplayer():
+    return rx.box(
+        search(),
+        rx.text("Despicable Me 4", font_size="96px", font_weight="800"),
+        rx.hstack(
+            rx.box(width="960px", height="540px", bg="#D9D9D9"),
+            rx.vstack(
+                rx.text(
+                    "Description",
+                    color="white",
+                    font_size="40px",
+                    font_weight="800"
+                ),
+                rx.text(
+                    "Gru and Lucy and their girls---Margo, Edith and Agnes---welcome a new "
+                    "member to the Gru family, Gru Jr., who is intent on tormenting his dad. "
+                    "Gru also faces a new nemesis in Maxime Le Mal and his femme fatale "
+                    "girlfriend Valentina, forcing the family to go on the run.",
+                    color="white",
+                    font_size="24px",
+                    max_width="536px"
+                ),
+                align_items="flex-start",
+            ),
+            rx.vstack(
+                movie_info_item("2024-06-20", "calendar"),
+                movie_info_item("$100,000,000", "calendar"),
+                movie_info_item("94min", "clock"),
+                movie_info_item("Site", "globe"),
+                movie_info_item("IMDB", "clock"),
+                movie_info_item("TMDB", "clock"),
+            ),
+            spacing="40px",
+        ),
+        
+        width="100%",
+        padding="50px",
+    )
+
+def movie_info_item(text, icon):
+    return rx.hstack(
+        rx.icon(
+            icon,
+            color="#F5F5F5",
+            bg="#2C2C2C",
+            padding="12px",
+            border_radius="32px",
+        ),
+        rx.text(text, color="white", font_size="24px"),
+        spacing="12px",
+    )
+
+
+
+
+
 style = {
     "body":{
         "background-color":"#121212"
@@ -93,3 +152,4 @@ style = {
 
 app = rx.App(style = style)
 app.add_page(index)
+app.add_page(movieplayer)
