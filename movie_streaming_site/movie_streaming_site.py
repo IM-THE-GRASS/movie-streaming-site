@@ -3,7 +3,7 @@ from movie_streaming_site.components.moviecard import movie_card
 from movie_streaming_site.state import State
 from movie_streaming_site.components.search import search
 from movie_streaming_site.components.footer import footer
-
+from reflex_lottiefiles import LottieFiles
 
 @rx.page(on_load=State.on_load)
 def index():
@@ -58,17 +58,9 @@ def index():
             rx.grid(
                 rx.foreach(
                     State.now_playing,
-                    lambda info, index: movie_card(info["title"], info["year"], f"{info['runtime']} mins", info["poster"], description=info["description"])
+                    lambda info, index: movie_card(info["title"], info["year"], f"{info['runtime']} mins", info["link"], info["poster"], description=info["description"])
                     
                 ),
-                # movie_card("Borderlands", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/7borders.jpg"),
-                # movie_card("Dealpool & Wolverine", "2024", "1 hr 21 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/3dead_and_wolv.jpg"),
-                # movie_card("Despicable Me 4", "2024", "1 hr 35 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/4minions_wer_despicible.jpg"),
-                # movie_card("Joe Rogan", "2024", "1 hr 23 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/6joe.jpg"),
-                # movie_card("Trap", "2024", "2 hr 41 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/5trap.jpg"),
-                # movie_card("The Garfield Move", "2024", "101 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/2garlf.jpg"),
-                # movie_card("Inside Out 2", "2024", "1 hr 31 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/1inside_out_2.jpg"),
-                # movie_card("The Super Mario Bros Movie", "2023", "93 min", "https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/0maro.jpg"),
                 footer(),
                 spacing="1.5vh",
                 columns="4",
@@ -87,76 +79,99 @@ def index():
 
 
 
-@rx.page(route="/movieplayer/[movieid]")
+@rx.page(route="/movieplayer/[movieid]", on_load=State.on_load)
 def movieplayer():
     return rx.box(
         search(),
-        rx.text(State.current_movie["title"], font_size="10.5vh", font_weight="800"),
-        rx.hstack(
-            rx.html(
-                State.movie_iframe,
-                width="50vw",
-                height="60vw"
-            ),
-            #rx.box(width="960px", height="540px", bg="#D9D9D9"),
-            rx.vstack(
-                rx.text(
-                    "Description",
-                    color="white",
-                    font_size="4vh",
-                    font_weight="800"
-                ),
-                rx.text(
-                    State.current_movie["description"],
-                    color="white",
-                    font_size="3vh",
-                    max_width="28vw"
-                ),
-                align_items="flex-start",
-            ),
-            rx.desktop_only(
+        
+        
+        rx.cond(
+            State.loading,
+            rx.center(
                 rx.vstack(
-                    movie_info_item(State.current_movie["date"], "calendar"),
-                    movie_info_item(State.current_movie["revenue"], "dollar-sign"),
-                    movie_info_item(State.current_movie["runtime"], "clock"),
-                    
-                    rx.cond(
-                        State.current_movie["site"],
-                        rx.link(
-                            movie_info_item("Site", "globe"),
-                            href=State.current_movie["site"],
-                            is_external=True
-                        ),
-                    ),
-                    rx.cond(
-                        State.current_movie["tmdb_link"],
-                        rx.link(
-                            movie_info_item("TMDB", "clock"),
-                            href=State.current_movie["tmdb_link"],
-                            is_external=True
-                        ),
-                    ),
-                    rx.cond(
-                        State.current_movie["imdb_link"],
-                        rx.link(
-                            movie_info_item("IMDB", "clock"),
-                            href=State.current_movie["imdb_link"],
-                            is_external=True
-                        )
+                    rx.heading("Loading, please wait"),
+                    LottieFiles(
+                        src="https://lottie.host/5ff06a80-3f45-4dd3-8737-f4cf62ba3d48/X5hdVEjbNK.lottie",
+                        autoplay=True,
+                        loop=True,
+                        width="20vw",
+                        height="20vw",
                     )
-                    
-                    
-                    
                 ),
+                
+                width="100%",
+                height="90vh"
             ),
             
-            spacing="2vw",
+            rx.box(
+                rx.text(State.current_movie["title"], font_size="10.5vh", font_weight="800"),
+                rx.hstack(
+                    rx.html(
+                        State.movie_iframe,
+                        width="50vw",
+                        height="60vw"
+                    ),
+                    #rx.box(width="960px", height="540px", bg="#D9D9D9"),
+                    rx.vstack(
+                        rx.text(
+                            "Description",
+                            color="white",
+                            font_size="4vh",
+                            font_weight="800"
+                        ),
+                        rx.text(
+                            State.current_movie["description"],
+                            color="white",
+                            font_size="3vh",
+                            max_width="28vw"
+                        ),
+                        align_items="flex-start",
+                    ),
+                    rx.desktop_only(
+                        rx.vstack(
+                            movie_info_item(State.current_movie["date"], "calendar"),
+                            movie_info_item(State.current_movie["revenue"], "dollar-sign"),
+                            movie_info_item(State.current_movie["runtime"], "clock"),
+                            
+                            rx.cond(
+                                State.current_movie["site"],
+                                rx.link(
+                                    movie_info_item("Site", "globe"),
+                                    href=State.current_movie["site"],
+                                    is_external=True
+                                ),
+                            ),
+                            rx.cond(
+                                State.current_movie["tmdb_link"],
+                                rx.link(
+                                    movie_info_item("TMDB", "clock"),
+                                    href=State.current_movie["tmdb_link"],
+                                    is_external=True
+                                ),
+                            ),
+                            rx.cond(
+                                State.current_movie["imdb_link"],
+                                rx.link(
+                                    movie_info_item("IMDB", "clock"),
+                                    href=State.current_movie["imdb_link"],
+                                    is_external=True
+                                )
+                            )
+                            
+                            
+                            
+                        ),
+                    ),
+                    
+                    spacing="2vw",
+                ),
+            )
         ),
+        
        
        
         width = "100%",
         padding="5.5vh",
-        on_mount=State.on_load    
     )
 
 def movie_info_item(text, icon):
