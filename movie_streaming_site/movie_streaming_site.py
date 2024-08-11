@@ -35,6 +35,7 @@ def index():
                 autoplayInterval=3000,
                 scrollDistance="slide",
                 wrapMode="wrap",
+                overflow="hidden"
             ),
             
             
@@ -45,6 +46,7 @@ def index():
                 left="0",
                 top="0",
                 bg="linear-gradient(180deg,rgba(18, 18, 18, 0.25) 0%, rgba(18, 18, 18, 0.77) 50%, rgba(18, 18, 18, 0.90) 77%, #121212 93%)",
+                overflow="hidden"
             ),
             motion(
                 
@@ -83,11 +85,13 @@ def index():
                 height="30vh",
                 line_height="14vh"
             ),
+            search(),
             width="100vw",
             height="111vh",
             position="relative",
+            overflow="hidden"
         ),
-        search(),
+        
         rx.center(
             rx.cond(
                 State.loading,
@@ -105,7 +109,8 @@ def index():
                     
                     width="100%",
                     height="90vh",
-                    margin_bottom="20vh"
+                    margin_bottom="20vh",
+                    overflow="hidden"
                 ),
 
             ),
@@ -122,14 +127,17 @@ def index():
                 position="absolute",
                 left="1.5vw",
                 top="105vh",
-                width="100%"
+                width="100%",
+                overflow="hidden"
+                
             ),
             width="100%",
+            overflow="hidden"
         ),
         
         bg="#121212",
         position="relative",
-        overflow_x="hidden"
+        overflow_x="hidden",
     )
 
 
@@ -139,6 +147,7 @@ def index():
 
 
 Slider = slider.create
+
 def testpage():
     return rx.box(
         Slider(
@@ -157,7 +166,11 @@ def testpage():
 
 style = {
     "body":{
-        "background-color":"#121212"
+        "background-color":"#121212",
+        "overflow":"hidden"
+    },
+    "html":{
+        "overflow":"hidden"
     }
 }
 
