@@ -9,15 +9,15 @@ from movie_streaming_site.pages.player import movieplayer
 from movie_streaming_site.pages.search import search_page
 from reflex_motion import motion
 
+
 class slider(rx.Component):
     library = "nuka-carousel"
     tag = "Carousel"
     autoplay:rx.Var[bool]
     showDots:rx.Var[bool]
+    wrapMode:rx.Var[str]
     autoplayInterval:rx.Var[int]
-
-
-Slider = slider.create
+    scrollDistance:rx.Var[str]
 
 
 @rx.page(on_load=State.on_load)
@@ -25,7 +25,18 @@ def index():
     return rx.box(
         
         rx.box(
-            rx.image(src="https://cloud-6t0bvxvfn-hack-club-bot.vercel.app/8torndado.jpg", width="100vw", height="108vh"),
+            Slider(
+                rx.image(src="https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/stKGOm8UyhuLPR9sZLjs5AkmncA.jpg", width="110vw", height="108vh"),
+                rx.image(src="https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/qGQf2OHIkoh89K8XeKQzhxczf96.jpg", width="110vw", height="108vh"),
+                rx.image(src="https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/eHz61dRrYZB16glXDttV0CnJf6j.jpg", width="110vw", height="108vh"),
+                rx.image(src="https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/mabuNsGJgRuCTuGqjFkWe1xdu19.jpg", width="110vw", height="108vh"),
+                autoplay=True,
+                showDots=False,
+                autoplayInterval=3000,
+                scrollDistance="slide",
+                wrapMode="wrap",
+            ),
+            
             
             rx.box(
                 width="100vw",
@@ -33,7 +44,7 @@ def index():
                 position="absolute",
                 left="0",
                 top="0",
-                bg="linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, rgba(18, 18, 18, 0.25) 37%, rgba(18, 18, 18, 0.77) 67%, rgba(18, 18, 18, 0.90) 77%, #121212 93%)",
+                bg="linear-gradient(180deg,rgba(18, 18, 18, 0.25) 0%, rgba(18, 18, 18, 0.77) 50%, rgba(18, 18, 18, 0.90) 77%, #121212 93%)",
             ),
             motion(
                 
@@ -61,14 +72,14 @@ def index():
             ),
             
             rx.heading(
-                "TORNADO MOVIE OR SOMETHING",
+                "Thousands of movies, right at your fingertips",
                 font_size="14vh",
                 font_weight="900",
                 color="white",
                 position="absolute",
                 left="7vw",
                 top="20vh",
-                width="43vw",
+                width="50vw",
                 height="30vh",
                 line_height="14vh"
             ),
@@ -123,17 +134,24 @@ def index():
 
 
 
+
+
+
+
+Slider = slider.create
 def testpage():
     return rx.box(
         Slider(
             rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-01.jpg"),
-            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-01.jpg"),
+            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-02.jpg"),
+            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-03.jpg"),
+            rx.image(src="https://commerce.nearform.com/open-source/nuka-carousel/img/pexels-04.jpg"),
             autoplay=True,
             showDots=True,
-            autoplayInterval=3000
+            autoplayInterval=3000,
+            wrapMode="wrap",
         )
     )
-
 
 
 
