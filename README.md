@@ -1,5 +1,5 @@
 # Movie Streaming Site
-![image](https://github.com/user-attachments/assets/05263ca7-04e4-45f3-bd30-5e163a2a1bfb)
+
 
 ### link to site: [https://movie-streaming-site.reflex.run/](https://movie-streaming-site.reflex.run/)
 
