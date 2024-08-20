@@ -36,7 +36,7 @@ class State(rx.State):
         url = f"https://api.themoviedb.org/3/search/movie?query={query}"
         headers = {
             "accept": "application/json",
-            "Authorization": f"Bearer {os.environ.get("auth")}"
+            "Authorization": f"Bearer {os.environ.get('auth')}"
         }
 
         response = requests.get(url, headers=headers)
@@ -55,7 +55,7 @@ class State(rx.State):
             result.pop("video")
             result.pop("vote_average")
             result.pop("vote_count")
-            result["link"] = f"/movieplayer/{result["id"]}"
+            result["link"] = f"/movieplayer/{result['id']}"
             result["description"] = result["overview"]
             result["poster"] = f"https://image.tmdb.org/t/p/w300_and_h450_bestv2/{result['poster_path']}"
         print(results)
@@ -76,8 +76,8 @@ class State(rx.State):
             result = {
                 
                 
-                "imdb_link":f"https://www.imdb.com/title/{data["imdb_id"]}/",
-                "tmdb_link":f"https://www.themoviedb.org/movie/{data["id"]}",
+                "imdb_link":f"https://www.imdb.com/title/{data['imdb_id']}/",
+                "tmdb_link":f"https://www.themoviedb.org/movie/{data['id']}",
                 "description":data["overview"],
                 "runtime":f"{data['runtime']} min",
                 "revenue":f"${data['revenue']}",
@@ -130,7 +130,7 @@ class State(rx.State):
                     "year":result["release_date"][:4],
                     "description":result["overview"],
                     "runtime":self.get_movie_data(result["id"])["runtime"],
-                    "link":f"/movieplayer/{result["id"]}"
+                    "link":f"/movieplayer/{result['id']}"
                 }
             )
         return result_list

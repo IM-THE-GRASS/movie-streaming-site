@@ -9,8 +9,7 @@ def search():
                 rx.icon(tag="search", color="white", size=30),
                 href=State.search_url
             ),
-            while_hover={"scale": 1.2},
-            while_tap={"scale": 0.9},
+            while_hover={"scale": 1.05},
             transition={"type": "spring", "stiffness": 400, "damping": 17},
         ),
         motion(
@@ -27,8 +26,7 @@ def search():
                 on_change=State.change_search_value
             ),
             width="100%",
-            while_hover={"scale": 1.05},
-            while_tap={"scale": 0.95},
+            while_hover={"scale": 1.02},
             transition={"type": "spring", "stiffness": 400, "damping": 17},
         ),
         

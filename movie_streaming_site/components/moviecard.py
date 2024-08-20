@@ -8,15 +8,10 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
             rx.link(
                 
                 motion(
-                    motion(
-                        rx.image(
-                            src=img,
-                            width="17vw",
-                            height="47vh"
-                        ),
-                        while_hover={"scale": 1.05},
-                        while_tap={"scale": 0.95},
-                        transition={"type": "spring", "stiffness": 400, "damping": 17},
+                    rx.image(
+                        src=img,
+                        width="17vw",
+                        height="47vh"
                     ),
                     rx.vstack(
                         rx.hstack(
@@ -35,8 +30,8 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
                     bg="#1A1A1A",
                     border_radius="1vh",
                     #border="0.1vh solid #D9D9D9",
-                    while_hover={"scale": 1.05},
-                    while_tap={"scale": 0.95},
+                    while_hover={"scale": 1.02},
+                    while_tap={"scale": 0.98},
                     transition={"type": "spring", "stiffness": 400, "damping": 17},
                 ),
                 padding="1vw",

@@ -50,19 +50,6 @@ def index():
             ),
             motion(
                 
-                rx.button(
-                    "Watch Now",
-                    rx.icon(tag="circle_play", size=70),
-                    bg="#FFE066",
-                    color="black",
-                    font_size="5vh",
-                    font_weight="800",
-                    border_radius="9999px",
-                    border="0.7vh solid #2C2C2C",
-                    padding="1.5vh",
-                    width="24vw",
-                    height="16vh"
-                ),
                 position="absolute",
                 left="7vw",
                 top="70vh",

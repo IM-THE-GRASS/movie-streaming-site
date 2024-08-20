@@ -1,4 +1,4 @@
 python-dotenv==1.0.1
-reflex-image-zoom==0.0.2
 reflex-lottiefiles==0.0.2
 reflex-motion==0.0.1
+reflex==0.5.9
