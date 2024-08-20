@@ -1,7 +1,7 @@
 # Movie Streaming Site
 
 
-### link to site: [https://movie-streaming-site.reflex.run/](https://movie-streaming-site.reflex.run/)
+### link to site: https://openstreaming.the-grass.hackclub.app/
 
 A site built in [Reflex](https://reflex.dev) that uses the [MoviesAPI.club](https://moviesapi.club) and the [TMDB](https://www.themoviedb.org/) api for movies streaming of thousands of movies without ads and for free.
 
