@@ -1,9 +1,9 @@
 # Movie Streaming Site
-# WARNING: WHEN USING THIS SITE I RECCOMEND USING [UBLOCK ORIGIN](https://ublockorigin.com/) OR YOU WILL GET INTRUSIVE POPUPS
+# WARNING: WHEN USING THIS SITE I RECCOMEND USING [UBLOCK ORIGIN](https://ublockorigin.com/) OR YOU *WILL* GET INTRUSIVE POPUPS
 
-### link to site: https://openstreaming.the-grass.hackclub.app/
+### link to site: https://openstream.thegrass.xyz/
 
-A site built in [Reflex](https://reflex.dev) that uses the [MoviesAPI.club](https://moviesapi.club) and the [TMDB](https://www.themoviedb.org/) api for movies streaming of thousands of movies without ads and for free.
+A site built in [Reflex](https://reflex.dev) that uses the [MoviesAPI.club](https://moviesapi.club) and the [TMDB](https://www.themoviedb.org/) api for movies streaming of thousands of movies for 100% free.
 
 Search, streaming, recomended and getting info about movies are all features of the site that can be had for free and with barely any loading times.
 
