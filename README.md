@@ -1,5 +1,5 @@
 # Movie Streaming Site
-# WARNING: WHEN USING THIS SITE I RECCOMEND USING [UBLOCK ORIGIN](https://ublockorigin.com/) OR YOU *WILL* GET INTRUSIVE POPUPS
+
 
 ### link to site: https://openstream.thegrass.xyz/
 
