@@ -1,6 +1,6 @@
 # Movie Streaming Site
 
-## This website is for educational purposes only, I am not distrubuiting these movies, this is just a wrapper for https://moviesapi.club
+# This website is for educational purposes only, I am not distrubuiting these movies, this is just a wrapper for https://moviesapi.club
 
 
 ### link to site: https://openstream.thegrass.xyz/
