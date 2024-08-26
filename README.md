@@ -25,6 +25,8 @@ auth="{YOUR TMDBAPI KEY HERE}"
 
 and replace `{YOUR TMDBAPI KEY HERE}` with an api key from [TMDB api](https://developer.themoviedb.org/v4/reference/intro/getting-started)
 
+to run just write `python -m reflex run` in the command line
+
 
 
 [^1]:version 3.11 or above is fine, older versions may work but I haven't tested them
