@@ -1,7 +1,11 @@
 # Movie Streaming Site
-![image](https://github.com/user-attachments/assets/05263ca7-04e4-45f3-bd30-5e163a2a1bfb)
 
-A site built in [Reflex](https://reflex.dev) that uses the [MoviesAPI.club](https://moviesapi.club) and the [TMDB](https://www.themoviedb.org/) api for movies streaming of thousands of movies without ads and for free.
+# This website is for educational purposes only, I am not distrubuiting these movies, this is just a wrapper for https://moviesapi.club
+
+
+### link to site: https://openstream.thegrass.xyz/
+
+A site built in [Reflex](https://reflex.dev) that uses the [MoviesAPI.club](https://moviesapi.club) and the [TMDB](https://www.themoviedb.org/) api for movies streaming of thousands of movies for 100% free.
 
 Search, streaming, recomended and getting info about movies are all features of the site that can be had for free and with barely any loading times.
 
@@ -20,6 +24,8 @@ auth="{YOUR TMDBAPI KEY HERE}"
 `
 
 and replace `{YOUR TMDBAPI KEY HERE}` with an api key from [TMDB api](https://developer.themoviedb.org/v4/reference/intro/getting-started)
+
+to run just write `python -m reflex run` in the command line
 
 
 
