@@ -1,13 +1,19 @@
 import reflex as rx
 from movie_streaming_site.state import State
 from reflex_motion import motion
+from movie_streaming_site.components.keybind import Keybind
 
 def search():
     return rx.hstack(
+        Keybind(
+            keys=["Enter"],
+            bind=State.go_search
+        ),
         motion(
-            rx.link(
+            rx.button(
                 rx.icon(tag="search", color="white", size=30),
-                href=State.search_url
+                variant="ghost",
+                on_click=lambda: State.go_search("A")
             ),
             while_hover={"scale": 1.05},
             transition={"type": "spring", "stiffness": 400, "damping": 17},
@@ -29,12 +35,13 @@ def search():
             while_hover={"scale": 1.02},
             transition={"type": "spring", "stiffness": 400, "damping": 17},
         ),
-        
+        on_focus= State.search_focus,
+        on_blur=State.search_blur,
         bg="rgba(0, 0, 0, 0.29)",
         border_radius="1087vh",
         padding="0.5vh",
-        width="48vw",
+        width=["90vw", "90vw", "48vw"],
         position="absolute",
-        left="28vw",
+        left=["5vw","5vw", "28vw"],
         top="2vh",
     ),

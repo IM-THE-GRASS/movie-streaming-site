@@ -11,7 +11,7 @@ class State(rx.State):
     current_movie:dict[str, str]
     loading:bool = True
     search_results:list[dict[str, str]]
-    
+    search_focused:bool = False
     search_value:str
     def change_search_value(self, new):
         self.search_value = new
@@ -20,7 +20,14 @@ class State(rx.State):
     def search_url(self) -> str:
         return f"/search/{self.search_value}/"
     
+    def search_focus(self):
+        self.search_focused = True
+    def search_blur(self):
+        self.search_focused = False
     
+    def go_search(self, _):
+        if self.search_value and self.search_focused:
+            return rx.redirect(f"/search/{self.search_value}/")
     
     
     @rx.var
@@ -137,12 +144,13 @@ class State(rx.State):
     def on_load(self):
         self.loading = True
         print("start load")
-        self.movie_iframe = f" <iframe src=\"https://moviesapi.club/movie/" + self.router.page.params.get("movieid", "519182") + "\" style=\"width:50vw;height:60vh;\"></iframe> " #style="height:60vh; width:50vw"
+        self.movie_iframe = f' <iframe src="https://moviesapi.club/movie/' + self.router.page.params.get("movieid", "123456") + '" frameborder="0" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" style="height:60vh; width:100%"></iframe>'
         print("load iframe")
         self.now_playing = self.get_now_playing_movies()
         print("load now playing")
         self.current_movie = self.get_current_movie()
         print("load current")
         self.loading=False
+        return rx.toast("This website is for educational purposes only, I am not distrubuiting these movies, this is just a wrapper for https://moviesapi.club", duration=5000)
     
     

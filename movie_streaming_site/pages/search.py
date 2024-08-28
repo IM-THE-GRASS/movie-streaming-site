@@ -12,15 +12,29 @@ def search_page():
             font_weight="800",
             padding_top="5vh"
         ),
-        rx.grid(
-            
-            rx.foreach(
-                State.search_results,
-                lambda info, index: movie_card(info["title"], info["year"], "", info["link"], info["poster"], description=info["description"])
+        rx.desktop_only(
+            rx.grid(
+                
+                rx.foreach(
+                    State.search_results,
+                    lambda info, index: movie_card(info["title"], info["year"], "", info["link"], info["poster"], description=info["description"])
+                ),
+                spacing="1.5vh",
+                columns="4",
+                width="100%"
             ),
-            spacing="1.5vh",
-            columns="4",
-            width="100%"
         ),
+        rx.mobile_and_tablet(
+            rx.grid(
+                
+                rx.foreach(
+                    State.search_results,
+                    lambda info, index: movie_card(info["title"], info["year"], "", info["link"], info["poster"], description=info["description"])
+                ),
+                spacing="1.5vh",
+                columns="1",
+                width="100%"
+            ),
+        )
     )
         

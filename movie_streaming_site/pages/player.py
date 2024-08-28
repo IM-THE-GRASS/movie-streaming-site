@@ -9,23 +9,25 @@ def movieplayer():
     return rx.box(
         search(),
         
-        
         rx.cond(
             State.loading,
             rx.center(
                 rx.vstack(
-                    rx.heading("Loading, please wait"),
+                    rx.center(
+                        rx.heading("Loading, please wait"),
+                        width="90vw",
+                    ),
                     LottieFiles(
                         src="https://lottie.host/5ff06a80-3f45-4dd3-8737-f4cf62ba3d48/X5hdVEjbNK.lottie",
                         autoplay=True,
                         loop=True,
-                        width="20vw",
-                        height="20vw",
+                        width="90vw",
+                        height=["40vh", "40vh", "40vh"],
                     )
                 ),
                 
-                width="100%",
-                height="90vh"
+                width="90vw",
+                height="80vh"
                 
             ),
 
@@ -33,26 +35,35 @@ def movieplayer():
             rx.box(
                 rx.text(State.current_movie["title"], font_size="10.5vh", font_weight="800"),
                 rx.hstack(
-                    rx.html(
-                        State.movie_iframe,
-                        width="50vw",
-                        height="60vw"
+                    rx.desktop_only(
+                        rx.html(
+                            State.movie_iframe,
+                            width="50vw"
+                        ),
+                    ),
+                    rx.mobile_and_tablet(
+                        rx.html(
+                            State.movie_iframe,
+                            width="85vw"
+                        ),
                     ),
                     #rx.box(width="960px", height="540px", bg="#D9D9D9"),
-                    rx.vstack(
-                        rx.text(
-                            "Description",
-                            color="white",
-                            font_size="4vh",
-                            font_weight="800"
+                    rx.desktop_only(
+                        rx.vstack(
+                            rx.text(
+                                "Description",
+                                color="white",
+                                font_size="4vh",
+                                font_weight="800"
+                            ),
+                            rx.text(
+                                State.current_movie["description"],
+                                color="white",
+                                font_size="3vh",
+                                max_width="28vw"
+                            ),
+                            align_items="flex-start",
                         ),
-                        rx.text(
-                            State.current_movie["description"],
-                            color="white",
-                            font_size="3vh",
-                            max_width="28vw"
-                        ),
-                        align_items="flex-start",
                     ),
                     rx.desktop_only(
                         rx.vstack(
@@ -89,7 +100,6 @@ def movieplayer():
                             
                         ),
                     ),
-                    
                     spacing="2vw",
                 ),
             )

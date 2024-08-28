@@ -10,8 +10,9 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
                 motion(
                     rx.image(
                         src=img,
-                        width="17vw",
-                        height="47vh"
+                        width="100%",
+                        height="47vh",
+                        object_fit="contain"
                     ),
                     rx.vstack(
                         rx.hstack(
@@ -25,7 +26,7 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
                         padding="1.7vh",
                     ),
                     padding="1vw",
-                    width="19vw",
+                    width="100%",
                     #height="60.4vh",
                     bg="#1A1A1A",
                     border_radius="1vh",
@@ -35,7 +36,7 @@ def movie_card(title: str, year: str, duration: str, link:str, img:str = "https:
                     transition={"type": "spring", "stiffness": 400, "damping": 17},
                 ),
                 padding="1vw",
-                width="19vw",
+                width="100%",
                 border_radius="1vh",
                 href=link,
                 is_external=True
