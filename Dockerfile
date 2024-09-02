@@ -2,11 +2,11 @@
 FROM python:3
 
 # util-linux bash
-RUN apk --no-cache add gcc python3-dev musl-dev linux-headers
+#RUN apt install gcc python3-dev musl-dev linux-headers
 
-RUN adduser --disabled-password gramen
+#RUN adduser --disabled-password gramen
 
-USER gramen
+#USER gramen
 
 ENV PATH="/home/gramen/.local/bin:${PATH}"
 
